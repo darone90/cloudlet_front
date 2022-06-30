@@ -1,8 +1,11 @@
 import React from 'react';
+import Menu from '../../components/main/menu/Menu';
 
 const Main = () => {
     return (
-        <div>Main</div>
+        <div>
+            <Menu />
+        </div>
     )
 }
 
