@@ -1,11 +1,11 @@
 import React, { ChangeEvent, useState } from 'react';
 import { UserChange } from '../../../../types/login.types';
 
+
 import Form from './Form';
 
 const User = () => {
 
-    const [indentyfication, setIdentyfication] = useState<string>('');
     const [changeData, setChangeData] = useState<UserChange>({
         type: '',
         change: '',
@@ -57,7 +57,6 @@ const User = () => {
                 })
                 break;
         }
-        setIdentyfication(ident)
     }
 
 
@@ -71,6 +70,7 @@ const User = () => {
             <button onClick={() => changeIdentificator('login')}>Login</button>
             <button onClick={() => changeIdentificator('password')}>Hasło</button>
             {form}
+            {form ? <button>Zapisz</button> : null}
         </div>
     )
 }

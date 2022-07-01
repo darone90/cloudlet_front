@@ -9,10 +9,10 @@ const Window = () => {
     return (
         <div className='Main-window'>
             <Routes>
-                <Route path='/' element={<Cloud />} />
                 <Route path='/notes' element={<Notes />} />
                 <Route path='/callendar' element={<Callendar />} />
                 <Route path='/user' element={<User />} />
+                <Route path='/*' element={<Cloud />} />
             </Routes>
         </div>
     )

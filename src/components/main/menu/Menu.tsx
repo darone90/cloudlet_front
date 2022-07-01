@@ -28,7 +28,7 @@ const Menu = () => {
                     <Link to={'/callendar'} >Kalnedarz </Link>
                 </li>
                 <li>
-                    <Link to={'/user'} >Dane logowania </Link>
+                    <Link to={'/user'} >Zmiana danych </Link>
                 </li>
                 <li onClick={logoutHandler}>
                     Wyloguj

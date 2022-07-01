@@ -9,9 +9,9 @@ const Login = () => {
     return (
         <div className='Login-window'>
             <Routes>
-                <Route path='/' element={<SignIn />} />
-                <Route path='/signup' element={<SignUp />} />
-                <Route path='/error/:info' element={<Error />} />
+                <Route path='signup' element={<SignUp />} />
+                <Route path='error/:info' element={<Error />} />
+                <Route path='*' element={<SignIn />} />
             </Routes>
         </div>
     )
