@@ -3,6 +3,10 @@ import { useDispatch } from 'react-redux';
 import { appLogin } from '../../../features/login-slice';
 import { getSession, setSession } from '../../../global/login-functions';
 import { Link } from 'react-router-dom';
+import { ButtonSize } from '../../../types/components.type';
+import './SignIn.scss';
+
+import Button from '../../../components/common/button/Button'
 
 interface ForLogin {
     login: string;
@@ -45,7 +49,9 @@ const SignIn = () => {
 
     return (
         <div className='login'>
+            <h1>Witaj w chmurce!</h1>
             <form className='login__form'>
+                <h2>Logowanie:</h2>
                 <label>
                     Login:
                     <input type="text" value={loginData.login} name='login' onChange={addLoginData} />
@@ -54,11 +60,14 @@ const SignIn = () => {
                     Hasło:
                     <input type="password" value={loginData.password} name='password' onChange={addLoginData} />
                 </label>
-                <button onClick={loginHandler}>Zaloguj</button>
+                <Button text='Zaloguj' size={ButtonSize.Small} func={loginHandler} />
             </form>
             <div className="login__account">
                 <strong>Nie posiadasz jeszcze konta ? Załóż je!</strong>
                 <button><Link to={'/signup'} >Załóż konto </Link></button>
+            </div>
+            <div className="login__image">
+
             </div>
         </div>
     )

@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from './store';
 import Login from './views/login/Login';
 import Main from './views/main/Main';
+import './App.scss'
 
 function App() {
 

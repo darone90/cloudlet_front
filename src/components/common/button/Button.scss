@@ -1,0 +1,14 @@
+button.main {
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
+    margin: 5px;
+    border: 1px solid black;
+    cursor: pointer;
+    transition: 0.3s;
+    background-color: azure;
+
+    &.small {
+        border-radius: 5% 5%;
+        font-size: 12px;
+        padding: 5px 20px;
+    }
+}
