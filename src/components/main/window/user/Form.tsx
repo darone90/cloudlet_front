@@ -6,13 +6,15 @@ interface Props {
         change: string,
         confirm: string,
         password: string,
-    }
-    func: (event: any) => void
+    };
+    func: (event: any) => void;
+    color: string;
+    information: string
 }
 
 const Form = (props: Props) => {
 
-    const { values, func } = props;
+    const { values, func, color, information } = props;
 
     return (
         <div className='universal-form'>
@@ -31,6 +33,9 @@ const Form = (props: Props) => {
                     <input type="password" value={values.password} name='password' onChange={func} />
                 </label>
             </form>
+            <div className="universal-form__info" style={{ color: color }}>
+                {information}
+            </div>
         </div>
     )
 }
