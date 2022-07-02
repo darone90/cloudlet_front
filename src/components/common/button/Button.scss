@@ -11,4 +11,10 @@ button.main {
         font-size: 12px;
         padding: 5px 20px;
     }
+        &.big {
+            font-size: 15px;
+            font-weight: bold;
+            padding: 8px 25px;
+            border-radius: 5% 5%;
+        }
 }

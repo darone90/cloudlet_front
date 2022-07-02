@@ -1,0 +1,15 @@
+footer {
+    color: white;
+    font-size: 10px;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    background-color: black;
+    padding: 5px 0 5px 10px;
+    font-family: 'Arima', Arial, Helvetica, sans-serif;
+
+    strong:nth-child(2) {
+        position: absolute;
+        right: 10px;
+    }
+}

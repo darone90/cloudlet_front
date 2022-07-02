@@ -1,0 +1,43 @@
+.Header {
+
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid black;
+    background-color: #23d5ab;
+    height: 80px;
+    border-bottom: 2px solid white;
+    box-shadow: 0 5px 15px white;
+
+    h1 {
+        text-align: left;
+        padding-left: 5%;
+        font-size: 25px;
+        font-weight: 600;
+        background-image: linear-gradient(45deg, #553c9a, #ee4b2b);
+        color: transparent;
+        background-clip: text;
+        border: none;
+    }
+
+    h3 {
+        font-size: 20px;
+        margin-top: 15px;
+        margin-left: 20%;
+        font-weight: 600;
+        background-image: linear-gradient(45deg, #553c9a, #ee4b2b);
+        color: transparent;
+        background-clip: text;
+    }
+
+    &__logo {
+        width: 20%;
+        height: 20%;
+        position: absolute;
+        top: 2%;
+        right: 2%;
+
+        img {
+            width: 100%;
+        }
+    }
+}

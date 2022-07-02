@@ -6,14 +6,15 @@ interface Props {
     func?: (param?: any) => void;
     text: string;
     size: ButtonSize
+    exClass?: string
 }
 
 const Button = (props: Props) => {
 
-    const { text, func, size } = props;
+    const { text, func, size, exClass } = props;
 
     return (
-        <button onClick={func} className={`main ${size}`}>
+        <button onClick={func} className={`main ${size} ${exClass}`}>
             {text}
         </button>
     )

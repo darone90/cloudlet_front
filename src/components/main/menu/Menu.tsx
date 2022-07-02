@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { appLogin } from '../../../features/login-slice';
 import { setSession } from '../../../global/login-functions';
+import { ButtonSize } from '../../../types/components.type';
+
+import Button from '../../common/button/Button';
+
+import './Menu.scss'
 
 const Menu = () => {
 
     const dispatch = useDispatch();
+
+    const [isActive, setIsActive] = useState<boolean>(false)
+
+    const activeHandler = () => {
+        setIsActive(prev => !prev)
+    }
 
     const logoutHandler = () => {
         setSession({ token: null, user: null, login: false });
@@ -16,24 +27,26 @@ const Menu = () => {
 
     return (
         <div className='Menu-main'>
-            <h2>MENU</h2>
-            <ul>
+
+            <Button text='Menu' size={ButtonSize.Big} func={activeHandler} exClass='Menu-main__activate' />
+
+            <ul className={isActive ? 'active' : ''}>
                 <li>
-                    <Link to={'/'} >Dokumenty </Link>
+                    <Link to={'/'} onClick={activeHandler}>Dokumenty </Link>
                 </li>
                 <li>
-                    <Link to={'/notes'} >Notatki </Link>
+                    <Link to={'/notes'} onClick={activeHandler}>Notatki </Link>
                 </li>
                 <li>
-                    <Link to={'/callendar'} >Kalnedarz </Link>
+                    <Link to={'/callendar'} onClick={activeHandler}>Kalnedarz </Link>
                 </li>
                 <li>
-                    <Link to={'/user'} >Zmiana danych </Link>
-                </li>
-                <li onClick={logoutHandler}>
-                    Wyloguj
+                    <Link to={'/user'} onClick={activeHandler}>Zmiana danych </Link>
                 </li>
             </ul>
+
+            <Button text='Wyloguj' size={ButtonSize.Big} func={logoutHandler} exClass={'Menu-main__logout'} />
+
         </div>
     )
 }
