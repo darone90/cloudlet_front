@@ -1,0 +1,12 @@
+.Change {
+    h3 {
+        text-align: center;
+
+    }
+
+    &__buttons {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}

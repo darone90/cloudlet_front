@@ -1,9 +1,13 @@
 import React, { ChangeEvent, useState } from 'react';
 import { UserChange } from '../../../../types/login.types';
 import { connection } from '../../../../global/login-functions';
+import { ButtonSize } from '../../../../types/components.type';
 
 import Form from './Form';
 import Spinner from '../../../common/spinner/Spinner';
+import Button from '../../../common/button/Button';
+
+import './User.scss';
 
 const User = () => {
 
@@ -107,12 +111,14 @@ const User = () => {
 
     return (
         <div className='Change'>
-            <h2>Które dane chcesz zmienić ?</h2>
-            <button onClick={() => changeIdentificator('email')}>Adres Email</button>
-            <button onClick={() => changeIdentificator('login')}>Login</button>
-            <button onClick={() => changeIdentificator('password')}>Hasło</button>
+            <h3>Które dane chcesz zmienić ?</h3>
+            <div className="Change__buttons">
+                <Button text='Adres Email' size={ButtonSize.Small} func={() => changeIdentificator('email')} />
+                <Button text='Login' size={ButtonSize.Small} func={() => changeIdentificator('login')} />
+                <Button text='Hasło' size={ButtonSize.Small} func={() => changeIdentificator('password')} />
+            </div>
             {form}
-            {form ? <button onClick={dataChangeHandler}>Zapisz</button> : null}
+            {form ? <Button text='zapisz' size={ButtonSize.Small} func={dataChangeHandler} /> : null}
         </div>
     )
 }

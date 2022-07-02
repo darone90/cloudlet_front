@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './Form.scss'
+
 interface Props {
     values: {
         type: string,
@@ -19,7 +21,7 @@ const Form = (props: Props) => {
     return (
         <div className='universal-form'>
             <form className="universal-form__form">
-                <h1>Podaj nowe dane</h1>
+                <h4>Podaj nowe dane</h4>
                 <label>
                     Nowy {values.type}:
                     <input type={values.type} value={values.change} name='change' onChange={func} />
