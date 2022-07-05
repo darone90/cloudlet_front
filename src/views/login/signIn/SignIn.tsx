@@ -4,9 +4,15 @@ import { appLogin } from '../../../features/login-slice';
 import { getSession, setSession } from '../../../global/login-functions';
 import { Link } from 'react-router-dom';
 import { ButtonSize } from '../../../types/components.type';
+import { loginFunction } from '../../../global/login-functions';
+import { Login } from '../../../types/login.types';
+
+import Button from '../../../components/common/button/Button';
+import Spinner from '../../../components/common/spinner/Spinner';
+
 import './SignIn.scss';
 
-import Button from '../../../components/common/button/Button'
+
 
 interface ForLogin {
     login: string;
@@ -17,6 +23,8 @@ const SignIn = () => {
 
     const dispatch = useDispatch();
 
+    const [loading, setLoading] = useState<boolean>(false)
+    const [info, setInfo] = useState<string>('');
     const [loginData, setLoginData] = useState<ForLogin>({
         login: '',
         password: ''
@@ -27,17 +35,19 @@ const SignIn = () => {
         dispatch(appLogin({ loginStatus: data.login, token: data.token }));
     }, [dispatch]);
 
-    const loginHandler = (event: MouseEvent<HTMLElement>) => {
+    const loginHandler = async (event: MouseEvent<HTMLElement>) => {
         event.preventDefault();
+        setLoading(true)
+        const data = await loginFunction(loginData) as Login
+        setLoading(false)
 
-        // chiwlowo 
-        const obj = {
-            token: '1245',
-            login: true,
-            user: 'Jam Kotełki',
+        if (data.login) {
+            setSession(data);
+            dispatch(appLogin({ loginStatus: data.login, token: data.token }));
+        } else {
+            setInfo('niepoprawny login lub hasło')
         }
-        setSession(obj);
-        dispatch(appLogin({ loginStatus: obj.login, token: obj.token }));
+
     };
 
     const addLoginData = (event: ChangeEvent<HTMLInputElement>) => {
@@ -46,6 +56,8 @@ const SignIn = () => {
             [event.target.name]: event.target.value
         }))
     }
+
+    if (loading) return <Spinner />;
 
     return (
         <div className='login'>
@@ -66,8 +78,14 @@ const SignIn = () => {
                 <strong>Nie posiadasz jeszcze konta ? Załóż je!</strong>
                 <button><Link to={'/signup'} >Załóż konto </Link></button>
             </div>
-            <div className="login__image">
-
+            <div className="login__info">
+                {info}
+            </div>
+            <div className="login__extras">
+                <p>Zapomniałeś hasła?</p>
+                <button><Link to={'/reset'} >Resetuj hasło</Link></button>
+                <p>Link aktywacyjny nie dotarł?</p>
+                <button><Link to={'/resend'} >Generuj nowy link</Link></button>
             </div>
         </div>
     )

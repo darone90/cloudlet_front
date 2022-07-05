@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useState, MouseEvent } from "react";
 import { Link } from 'react-router-dom';
 import { User } from '../../../types/login.types';
 import { connection } from "../../../global/login-functions";
@@ -21,8 +21,9 @@ const SignUp = () => {
         confirm: '',
     });
 
-    const userRegistrationHandler = async () => {
+    const userRegistrationHandler = async (e: MouseEvent<HTMLElement>) => {
 
+        e.preventDefault()
         if (userData.password !== userData.confirm) {
             setColor('red');
             setInformation('Potwierdzenie hasła różni się od hasła');
@@ -45,9 +46,9 @@ const SignUp = () => {
         }
 
         setLoading(true);
-        const responese = await connection(userData, 'user/add', 'POST')
+        const responese = await connection(userData, 'users/add', 'POST')
         setLoading(false);
-
+        console.log(responese.status)
         if (!responese.status) {
             window.location.href = `/error/:${responese.info}`
         } else {

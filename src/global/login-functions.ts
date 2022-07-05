@@ -33,12 +33,31 @@ export const connection = async (obj: unknown, path: string, method: string): Pr
             method: method,
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(obj)
-        })) as unknown as Income;
-        return income
+        })) as any
+        const data = (await income.json()) as Income;
+        return data
     } catch (err) {
         return ({
             status: false,
             info: 'response faild'
+        })
+    }
+}
+
+export const loginFunction = async (obj: unknown): Promise<Login> => {
+    try {
+        const income = (await fetch(`http://localhost:${backendConf.port}/users/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(obj)
+        })) as any
+        const data = (await income.json()) as Login;
+        return data
+    } catch (err) {
+        return ({
+            login: false,
+            token: null,
+            user: null
         })
     }
 }
