@@ -24,7 +24,7 @@ const Form = (props: Props) => {
                 <h4>Podaj nowe dane</h4>
                 <label>
                     Nowy {values.type}:
-                    <input type={values.type} value={values.change} name='change' onChange={func} />
+                    <input type={values.type === 'login' ? 'text' : values.type} value={values.change} name='change' onChange={func} />
                 </label>
                 <label>
                     Potwierdź {values.type}:

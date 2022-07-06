@@ -33,7 +33,8 @@ export const connection = async (obj: unknown, path: string, method: string): Pr
             method: method,
             headers: {
                 'Content-Type': 'application/json',
-                'Token': String(getSession().token)
+                'Token': String(getSession().token),
+                'Name': String(getSession().user) 
             },
             body: JSON.stringify(obj)
         })) as any

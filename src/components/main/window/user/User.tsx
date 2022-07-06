@@ -25,6 +25,12 @@ const User = () => {
         password: ''
     });
 
+    const logout = () => {
+        setSession({ token: null, user: null, login: false });
+        dispatch(appLogin({ loginStatus: false, token: null }));
+        window.location.href = '/'
+    }
+
     const userDelete = async () => {
         if (window.confirm('Konto zostanie usunięte bezpowrotnie! Kontynuować ?')) {
             const id = getSession().token;
@@ -32,9 +38,7 @@ const User = () => {
             if (response.status === false) {
                 window.location.href = `/error/:${response.info}`;
             } else {
-                setSession({ token: null, user: null, login: false });
-                dispatch(appLogin({ loginStatus: false, token: null }));
-                window.location.href = '/'
+                logout()
             }
         } else {
             return
@@ -69,14 +73,23 @@ const User = () => {
         }
 
         setLoading(true)
-        const response = await connection(changeData, 'user/change', 'PATCH')
+        const response = await connection(changeData, 'users/change', 'PATCH')
         setLoading(false);
 
-        if (response.status === false) {
-            window.location.href = `/error/:${response.info}`
+        if (response.status === true) {
+            setInformation('dane zapisane poprawnie, wymagane ponowne logowanie, automatyczne wylogowanie nastąpi za 5 sekund');
+            setColor('green');
+            setChangeData(prev => ({
+                ...prev,
+                change: '',
+                confirm: '',
+                password: ''
+            }))
+            setTimeout(() => {
+                logout()
+            }, 5000)
         } else {
-            setInformation('dane zapisane poprawnie');
-            setColor('green')
+            window.location.href = `/error/:${response.info}`
         }
     }
 
