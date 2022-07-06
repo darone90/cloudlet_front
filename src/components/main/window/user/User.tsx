@@ -1,7 +1,9 @@
 import React, { ChangeEvent, useState } from 'react';
 import { UserChange } from '../../../../types/login.types';
-import { connection } from '../../../../global/login-functions';
+import { connection, getSession, setSession } from '../../../../global/login-functions';
 import { ButtonSize } from '../../../../types/components.type';
+import { useDispatch } from 'react-redux';
+import { appLogin } from '../../../../features/login-slice';
 
 import Form from './Form';
 import Spinner from '../../../common/spinner/Spinner';
@@ -11,6 +13,8 @@ import './User.scss';
 
 const User = () => {
 
+    const dispatch = useDispatch();
+
     const [loading, setLoading] = useState<boolean>(false)
     const [information, setInformation] = useState<string>('Prosze wprowadzić dane')
     const [color, setColor] = useState<string>('black')
@@ -19,7 +23,23 @@ const User = () => {
         change: '',
         confirm: '',
         password: ''
-    })
+    });
+
+    const userDelete = async () => {
+        if (window.confirm('Konto zostanie usunięte bezpowrotnie! Kontynuować ?')) {
+            const id = getSession().token;
+            const response = await connection({}, `users/change/${id}`, 'DELETE');
+            if (response.status === false) {
+                window.location.href = `/error/:${response.info}`;
+            } else {
+                setSession({ token: null, user: null, login: false });
+                dispatch(appLogin({ loginStatus: false, token: null }));
+                window.location.href = '/'
+            }
+        } else {
+            return
+        }
+    }
 
     const dataChangeHandler = async () => {
         if (!changeData.type || !changeData.change || !changeData.confirm || !changeData.password) {
@@ -27,18 +47,18 @@ const User = () => {
             setColor('red')
             return
         }
-        if (changeData.type === 'email' && changeData.change.length > 60) {
-            setInformation('adres mail nie może przekraczać 60 znaków');
+        if (changeData.type === 'email' && (changeData.change.length > 60 || changeData.change.length < 5)) {
+            setInformation('adres mail nie może przekraczać 60 znaków i być mniejszy niż 5');
             setColor('red')
             return
         }
-        if (changeData.type === 'login' && changeData.change.length > 40) {
-            setInformation('login nie może przekraczać 40 znaków');
+        if (changeData.type === 'login' && (changeData.change.length > 40 || changeData.change.length < 3)) {
+            setInformation('login nie może przekraczać 40 znaków i być mniejszy niż 3');
             setColor('red')
             return
         }
-        if (changeData.type === 'hasło' && changeData.change.length > 30) {
-            setInformation('hasło nie może przekraczać 30 znaków');
+        if (changeData.type === 'hasło' && (changeData.change.length > 30 || changeData.change.length < 8)) {
+            setInformation('hasło nie może przekraczać 30 znaków i być mniejsz niż 8');
             setColor('red')
             return
         }
@@ -49,11 +69,11 @@ const User = () => {
         }
 
         setLoading(true)
-        const responese = await connection(changeData, 'user/change', 'PATCH')
+        const response = await connection(changeData, 'user/change', 'PATCH')
         setLoading(false);
 
-        if (!responese.status) {
-            window.location.href = `/error/:${responese.info}`
+        if (response.status === false) {
+            window.location.href = `/error/:${response.info}`
         } else {
             setInformation('dane zapisane poprawnie');
             setColor('green')
@@ -67,43 +87,12 @@ const User = () => {
         }))
     }
 
-    const changeIdentificator = (ident: string): void => {
-        switch (ident) {
-            case 'email':
-                setChangeData({
-                    type: 'email',
-                    change: '',
-                    confirm: '',
-                    password: ''
-                })
-                break;
-            case 'login':
-                setChangeData({
-                    type: 'login',
-                    change: '',
-                    confirm: '',
-                    password: ''
-                })
-                break;
-            case 'password':
-                setChangeData({
-                    type: 'hasło',
-                    change: '',
-                    confirm: '',
-                    password: ''
-                })
-                break;
-            default:
-                setChangeData({
-                    type: '',
-                    change: '',
-                    confirm: '',
-                    password: ''
-                })
-                break;
-        }
+    const changeIdentificator = (id: string) => {
+        setChangeData(prev => ({
+            ...prev,
+            type: id
+        }))
     }
-
 
     if (loading) return <Spinner />;
 
@@ -119,6 +108,7 @@ const User = () => {
             </div>
             {form}
             {form ? <Button text='zapisz' size={ButtonSize.Small} func={dataChangeHandler} /> : null}
+            <Button text='Usuń konto' size={ButtonSize.Important} func={userDelete} />
         </div>
     )
 }

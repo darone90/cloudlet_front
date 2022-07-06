@@ -41,7 +41,7 @@ const SignIn = () => {
         const data = await loginFunction(loginData) as Login
         setLoading(false)
 
-        if (data.login) {
+        if (data.login === true) {
             setSession(data);
             dispatch(appLogin({ loginStatus: data.login, token: data.token }));
         } else {
@@ -73,13 +73,13 @@ const SignIn = () => {
                     <input type="password" value={loginData.password} name='password' onChange={addLoginData} />
                 </label>
                 <Button text='Zaloguj' size={ButtonSize.Small} func={loginHandler} />
+                <div className="login__form--info">
+                    {info}
+                </div>
             </form>
             <div className="login__account">
                 <strong>Nie posiadasz jeszcze konta ? Załóż je!</strong>
                 <button><Link to={'/signup'} >Załóż konto </Link></button>
-            </div>
-            <div className="login__info">
-                {info}
             </div>
             <div className="login__extras">
                 <p>Zapomniałeś hasła?</p>

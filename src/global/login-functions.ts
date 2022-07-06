@@ -31,7 +31,10 @@ export const connection = async (obj: unknown, path: string, method: string): Pr
     try {
         const income = (await fetch(`http://localhost:${backendConf.port}/${path}`, {
             method: method,
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Token': String(getSession().token)
+            },
             body: JSON.stringify(obj)
         })) as any
         const data = (await income.json()) as Income;
@@ -60,4 +63,12 @@ export const loginFunction = async (obj: unknown): Promise<Login> => {
             user: null
         })
     }
+}
+
+export const getconnection = async (code: string, path: string): Promise<Income> => {
+    const income = await fetch(`http://localhost:${backendConf.port}/${path}/${code}`, {
+        method: "GET"
+    }) as any;
+    const data = await income.json() as Income
+    return data
 }

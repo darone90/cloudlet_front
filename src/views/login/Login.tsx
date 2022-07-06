@@ -6,6 +6,7 @@ import SignUp from './signUp/SignUp';
 import Error from '../error/Error';
 import Reset from './reset/Reset';
 import Resend from './resend/Resend';
+import NewPassword from './reset/NewPassword';
 
 const Login = () => {
     return (
@@ -14,7 +15,8 @@ const Login = () => {
                 <Route path='signup' element={<SignUp />} />
                 <Route path='error/:info' element={<Error />} />
                 <Route path='*' element={<SignIn />} />
-                <Route path='reset/:code' element={<Reset />} />
+                <Route path='reset/' element={<Reset />} />
+                <Route path='reset/:code' element={<NewPassword />} />
                 <Route path='resend/' element={<Resend />} />
             </Routes>
         </div>

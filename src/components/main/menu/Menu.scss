@@ -20,6 +20,7 @@
         top: 40px;
         left: -110%;
         animation: menuSlide 0.3s ease forwards;
+        background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
 
         &.active {
             display: block;

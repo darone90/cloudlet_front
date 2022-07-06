@@ -41,7 +41,7 @@ const Menu = () => {
                     <Link to={'/callendar'} onClick={activeHandler}>Kalnedarz </Link>
                 </li>
                 <li>
-                    <Link to={'/user'} onClick={activeHandler}>Zmiana danych </Link>
+                    <Link to={'/user'} onClick={activeHandler}>Użytkownik </Link>
                 </li>
             </ul>
 

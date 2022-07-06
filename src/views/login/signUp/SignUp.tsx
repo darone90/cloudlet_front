@@ -34,6 +34,11 @@ const SignUp = () => {
             setInformation('Hasło musi składać się z conajmniej 8 znaków');
             return
         }
+        if (userData.email.length < 5 || userData.login.length < 3) {
+            setColor('red');
+            setInformation('Podane dane są za krótkie email: min 5 znaków, login: min 3 znaki');
+            return
+        }
         if (!userData.email || !userData.login || !userData.password) {
             setColor('red');
             setInformation('Pozostały nieuzupełnione pola!');
@@ -46,11 +51,11 @@ const SignUp = () => {
         }
 
         setLoading(true);
-        const responese = await connection(userData, 'users/add', 'POST')
+        const response = await connection(userData, 'users/add', 'POST')
         setLoading(false);
-        console.log(responese.status)
-        if (!responese.status) {
-            window.location.href = `/error/:${responese.info}`
+        console.log(response)
+        if (response.status !== true) {
+            window.location.href = `/error/:${response.info}`
         } else {
             setColor('green');
             setInformation('Dane zostały prawidłowo zapisane. W celu aktywacji konta sprawdź swoją skrzynkę i kliknij w link weryfikacyjny');
@@ -74,8 +79,9 @@ const SignUp = () => {
 
     return (
         <div className="signup">
+            <h1>Dane nowego użytkownika</h1>
             <form className="signup__form">
-                <h1>Dane nowego użytkownika</h1>
+
                 <label>
                     Email:
                     <input type="email" value={userData.email} name='email' onChange={addUserData} />

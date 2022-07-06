@@ -58,6 +58,35 @@
             }
         }
 
+        }
+    
+        &__extras {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+            margin-top: 20px;
+    
+            p {
+                font-family: 'Raleway', Arial, Helvetica, sans-serif;
+                font-size: 7px;
+            }
+    
+            button {
+    
+                background-color: azure;
+                border-radius: 5% 5%;
+                font-size: 7px;
+                border: 1px solid black;
+    
+                a {
+                    text-decoration: none;
+                    color: black;
+                    display: block;
+                    padding: 3px 2px;
+                    font-family: Arial, Helvetica, sans-serif;
+                }
+            }
     }
 }
 
