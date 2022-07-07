@@ -43,7 +43,7 @@ export const connection = async (obj: unknown, path: string, method: string): Pr
     } catch (err) {
         return ({
             status: false,
-            info: 'response faild'
+            info: 'Wystąpił problem z połączeniem... sprawdź czy masz internet :)'
         })
     }
 }

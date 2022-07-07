@@ -1,0 +1,20 @@
+.Add-notes {
+    font-family: Arial, Helvetica, sans-serif;
+
+    form {
+        display: flex;
+        flex-direction: column;
+
+        label {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            margin: 5px 2px;
+
+            input {
+                margin-top: 5px;
+            }
+        }
+    }
+
+}
