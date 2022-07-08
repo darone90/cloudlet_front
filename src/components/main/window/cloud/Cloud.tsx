@@ -7,6 +7,8 @@ import Gallery from './Gallery';
 import UploadFiles from './Uploadfile';
 import UploadFoto from './Uploadfoto';
 
+import './Cloud.scss';
+
 const Cloud = () => {
 
     const [view, setView] = useState<boolean>(false)

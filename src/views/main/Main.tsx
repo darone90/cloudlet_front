@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { listConnection } from '../../global/notes-function';
 import { useDispatch } from 'react-redux';
 import { loadAll } from '../../features/notes-slice';
+import { loadFiles } from '../../features/files-slice';
+import { loadFoto } from '../../features/foto-slice';
+import { getFilesList } from '../../global/files-functions';
 
 import Header from '../../components/main/header/Header';
 import Menu from '../../components/main/menu/Menu';
@@ -28,9 +31,23 @@ const Main = () => {
         }
     }
 
+    const loadFilesFromDatabase = async () => {
+        try {
+            const data = await getFilesList('files');
+            if (data) {
+                const { files, fotos } = data;
+                dispatch(loadFiles(files))
+                dispatch(loadFoto(fotos))
+            }
+        } catch (err) {
+            navigate(`/error/nie udało się załadować listy plików`)
+        }
+    }
+
     useEffect(() => {
         (async () => {
             await loadNotes()
+            await loadFilesFromDatabase();
             setLoading(false)
         })();
     });

@@ -1,0 +1,9 @@
+.Cloud {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .main {
+        width: 50%;
+    }
+}
