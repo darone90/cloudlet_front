@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useState, MouseEvent } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { User } from '../../../types/login.types';
+import { newUserValidationFunc } from "./validation.function";
 import { connection } from "../../../global/login-functions";
 import { ButtonSize } from "../../../types/components.type";
 import './SignUp.scss';
@@ -8,63 +9,38 @@ import './SignUp.scss';
 import Spinner from "../../../components/common/spinner/Spinner";
 import Button from "../../../components/common/button/Button";
 
+const initialState = {
+    email: '',
+    login: '',
+    password: '',
+    confirm: '',
+}
+
 const SignUp = () => {
+
+    const navigate = useNavigate();
 
     const [loading, setLoading] = useState<boolean>(false)
 
     const [information, setInformation] = useState<string>('Proszę uzupełnić dane');
     const [color, setColor] = useState<string>('black');
-    const [userData, setUserData] = useState<User>({
-        email: '',
-        login: '',
-        password: '',
-        confirm: '',
-    });
+    const [userData, setUserData] = useState<User>(initialState);
 
     const userRegistrationHandler = async (e: MouseEvent<HTMLElement>) => {
 
         e.preventDefault()
-        if (userData.password !== userData.confirm) {
-            setColor('red');
-            setInformation('Potwierdzenie hasła różni się od hasła');
-            return
-        }
-        if (userData.password.length < 8) {
-            setColor('red');
-            setInformation('Hasło musi składać się z conajmniej 8 znaków');
-            return
-        }
-        if (userData.email.length < 5 || userData.login.length < 3) {
-            setColor('red');
-            setInformation('Podane dane są za krótkie email: min 5 znaków, login: min 3 znaki');
-            return
-        }
-        if (!userData.email || !userData.login || !userData.password) {
-            setColor('red');
-            setInformation('Pozostały nieuzupełnione pola!');
-            return
-        }
-        if (userData.email.length > 60 || userData.login.length > 40 || userData.password.length > 30) {
-            setColor('red');
-            setInformation('Podane dane są za długie! Email max: 60 znaków, login max: 40 znaków, hasło max: 30 znaków');
-            return
-        }
+        if (!newUserValidationFunc(setColor, setInformation, userData)) return;
 
         setLoading(true);
         const response = await connection(userData, 'users/add', 'POST')
         setLoading(false);
-        console.log(response)
+
         if (response.status !== true) {
-            window.location.href = `/error/:${response.info}`
+            navigate(`/error/:${response.info}`)
         } else {
             setColor('green');
             setInformation('Dane zostały prawidłowo zapisane. W celu aktywacji konta sprawdź swoją skrzynkę i kliknij w link weryfikacyjny');
-            setUserData({
-                email: '',
-                login: '',
-                password: '',
-                confirm: '',
-            })
+            setUserData(initialState)
         }
     }
 

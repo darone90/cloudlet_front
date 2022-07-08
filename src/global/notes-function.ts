@@ -22,7 +22,7 @@ export const getOneNote = async (path: string, id: string): Promise<Note> => {
 
 export const listDeleter = async (path: string, id: string): Promise<Income> => {
     const income = await fetch(`http://localhost:${backendConf.port}/${path}/${id}`, {
-        method: "GET"
+        method: "DELETE"
     }) as any;
     const data = await income.json() as Income;
     return data

@@ -20,7 +20,7 @@ const CallendarForm = (props: Props) => {
                 Początek wydarzenia <input type="date" name='startDate' value={data.startDate} onChange={func} min={data.create} />
             </label>
             <label>
-                Koniec wydarzenia <input type="date" name='endDate' value={data.endDate} onChange={func} min={data.create} />
+                Koniec wydarzenia <input type="date" name='endDate' value={data.endDate} onChange={func} min={data.startDate} />
             </label>
             <label>
                 Usunąć po wydarzeniu? <input type="checkbox" name='delete' onChange={() => set(prev => ({ ...prev, delete: !prev.delete }))} />

@@ -1,31 +1,39 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useState, MouseEvent } from 'react';
 import { ButtonSize } from '../../../../types/components.type';
 import { Note } from '../../../../types/notes.type';
 import { connection } from '../../../../global/login-functions';
+import { addNoteValidation, createShortNote } from './addNotesValidation.function';
+import { addOne } from '../../../../features/notes-slice';
 
 import Button from '../../../common/button/Button';
 import CallendarForm from './parts/CallendarForm';
 import Spinner from '../../../common/spinner/Spinner';
 
 import './Addnotes.scss';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
+const initialState = {
+    title: '',
+    description: '',
+    startDate: '',
+    endDate: '',
+    delete: false,
+    email: '',
+    create: ((new Date()).toISOString()).slice(0, 10),
+}
 
 const AddNotes = () => {
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [addCallendar, setAddCallendar] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
     const [info, setInfo] = useState<string>('');
     const [color, setColor] = useState<string>('black')
 
-    const [noteData, setNoteData] = useState<Note>({
-        title: '',
-        description: '',
-        startDate: '',
-        endDate: '',
-        delete: false,
-        email: '',
-        create: ((new Date()).toISOString()).slice(0, 10),
-
-    });
+    const [noteData, setNoteData] = useState<Note>(initialState);
 
     const addnoteData = (event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
         setNoteData(prev => ({
@@ -34,31 +42,25 @@ const AddNotes = () => {
         }))
     }
 
-    const addNoteToDatabase = async () => {
-        if (noteData.title === '' || noteData.description === '') {
-            setInfo('Nie podano wymaganych informacji (tytuł, opis)');
-            setColor('red');
-            return;
-        }
+    const addNoteToDatabase = async (event: MouseEvent<HTMLElement>) => {
+
+        event.preventDefault();
+        if (!addNoteValidation(setColor, setInfo, noteData)) return;
+
         setLoading(true);
         const response = await connection(noteData, 'notes/add', 'POST');
         setLoading(false);
 
+        const note = createShortNote(noteData, response.info);
+        dispatch(addOne(note));
+
         if (response.status === true) {
             setInfo('Notatka została dodana');
             setColor('green');
-            setNoteData({
-                title: '',
-                description: '',
-                startDate: '',
-                endDate: '',
-                delete: false,
-                email: '',
-                create: ((new Date()).toISOString()).slice(0, 10),
-
-            })
+            setNoteData({ ...initialState, create: ((new Date()).toISOString()).slice(0, 10), })
+            window.scrollTo({ top: 0, behavior: 'smooth' })
         } else {
-            window.location.href = `/error/:${response.info}`
+            navigate(`/error/:${response.info}`)
         }
     }
     if (loading) return <Spinner />;
@@ -68,11 +70,11 @@ const AddNotes = () => {
             <p style={{ color }}>{info}</p>
             <form>
                 <label>
-                    Tytuł <input type="text" name='title' value={noteData.title} onChange={addnoteData} />
+                    Tytuł <input type="text" name='title' value={noteData.title} onChange={addnoteData} maxLength={50} />
                 </label>
                 <label>
                     <strong>Opis</strong>
-                    <textarea cols={30} rows={10} maxLength={500} name='description' value={noteData.description} onChange={addnoteData}></textarea>
+                    <textarea cols={30} rows={10} maxLength={5000} name='description' value={noteData.description} onChange={addnoteData}></textarea>
                 </label>
                 <label>
                     zapisać w kalendarzu ? <input type="checkbox" onChange={() => setAddCallendar(prev => !prev)} />

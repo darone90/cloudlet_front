@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { appLogin } from '../../../features/login-slice';
 import { setSession } from '../../../global/login-functions';
@@ -12,6 +12,7 @@ import './Menu.scss'
 const Menu = () => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate()
 
     const [isActive, setIsActive] = useState<boolean>(false)
 
@@ -22,7 +23,7 @@ const Menu = () => {
     const logoutHandler = () => {
         setSession({ token: null, user: null, login: false });
         dispatch(appLogin({ loginStatus: false, token: null }));
-        window.location.href = '/'
+        navigate('/');
     }
 
     return (

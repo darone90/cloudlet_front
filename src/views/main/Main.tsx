@@ -10,28 +10,30 @@ import Footer from '../../components/main/footer/Footer';
 import Spinner from '../../components/common/spinner/Spinner';
 
 import './Main.scss'
+import { useNavigate } from 'react-router-dom';
 
 const Main = () => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-    const [loading, setLoading] = useState<boolean>(false) //zmienic na true jak odblokuje useEffect
+    const [loading, setLoading] = useState<boolean>(true)
 
     const loadNotes = async () => {
         try {
             const data = await listConnection('notes');
             if (data) { dispatch(loadAll(data)) }
         } catch (err) {
-            window.location.href = `/error/nie udało się załadować listy notatek...`
+            navigate(`/error/nie udało się załadować listy notatek...`)
         }
     }
 
-    // useEffect(() => {
-    //     (async () => {
-    //         await loadNotes()
-    //         setLoading(false)
-    //     })();
-    // });
+    useEffect(() => {
+        (async () => {
+            await loadNotes()
+            setLoading(false)
+        })();
+    });
 
     if (loading) return <Spinner />;
 

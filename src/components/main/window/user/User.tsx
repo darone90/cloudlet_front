@@ -4,6 +4,8 @@ import { connection, getSession, setSession } from '../../../../global/login-fun
 import { ButtonSize } from '../../../../types/components.type';
 import { useDispatch } from 'react-redux';
 import { appLogin } from '../../../../features/login-slice';
+import { dataValidation } from './dataChangeValidation.function';
+import { useNavigate } from 'react-router-dom';
 
 import Form from './Form';
 import Spinner from '../../../common/spinner/Spinner';
@@ -11,24 +13,27 @@ import Button from '../../../common/button/Button';
 
 import './User.scss';
 
+const initialState = {
+    type: '',
+    change: '',
+    confirm: '',
+    password: ''
+}
+
 const User = () => {
 
     const dispatch = useDispatch();
+    const navigate = useNavigate()
 
     const [loading, setLoading] = useState<boolean>(false)
     const [information, setInformation] = useState<string>('Prosze wprowadzić dane')
     const [color, setColor] = useState<string>('black')
-    const [changeData, setChangeData] = useState<UserChange>({
-        type: '',
-        change: '',
-        confirm: '',
-        password: ''
-    });
+    const [changeData, setChangeData] = useState<UserChange>(initialState);
 
     const logout = () => {
         setSession({ token: null, user: null, login: false });
         dispatch(appLogin({ loginStatus: false, token: null }));
-        window.location.href = '/'
+        navigate('/');
     }
 
     const userDelete = async () => {
@@ -36,7 +41,7 @@ const User = () => {
             const id = getSession().token;
             const response = await connection({}, `users/change/${id}`, 'DELETE');
             if (response.status === false) {
-                window.location.href = `/error/:${response.info}`;
+                navigate(`/error/:${response.info}`);
             } else {
                 logout()
             }
@@ -46,31 +51,8 @@ const User = () => {
     }
 
     const dataChangeHandler = async () => {
-        if (!changeData.type || !changeData.change || !changeData.confirm || !changeData.password) {
-            setInformation('nie wszytskie wymagane pola zostały uzupełnione');
-            setColor('red')
-            return
-        }
-        if (changeData.type === 'email' && (changeData.change.length > 60 || changeData.change.length < 5)) {
-            setInformation('adres mail nie może przekraczać 60 znaków i być mniejszy niż 5');
-            setColor('red')
-            return
-        }
-        if (changeData.type === 'login' && (changeData.change.length > 40 || changeData.change.length < 3)) {
-            setInformation('login nie może przekraczać 40 znaków i być mniejszy niż 3');
-            setColor('red')
-            return
-        }
-        if (changeData.type === 'hasło' && (changeData.change.length > 30 || changeData.change.length < 8)) {
-            setInformation('hasło nie może przekraczać 30 znaków i być mniejsz niż 8');
-            setColor('red')
-            return
-        }
-        if (changeData.change !== changeData.confirm) {
-            setInformation('potwierdzenie mie zgadza się z podaną wartością');
-            setColor('red')
-            return
-        }
+
+        if (!dataValidation(setColor, setInformation, changeData)) return;
 
         setLoading(true)
         const response = await connection(changeData, 'users/change', 'PATCH')
@@ -79,17 +61,12 @@ const User = () => {
         if (response.status === true) {
             setInformation('dane zapisane poprawnie, wymagane ponowne logowanie, automatyczne wylogowanie nastąpi za 5 sekund');
             setColor('green');
-            setChangeData(prev => ({
-                ...prev,
-                change: '',
-                confirm: '',
-                password: ''
-            }))
+            setChangeData(prev => ({ ...initialState, type: prev.type }))
             setTimeout(() => {
                 logout()
             }, 5000)
         } else {
-            window.location.href = `/error/:${response.info}`
+            navigate(`/error/:${response.info}`)
         }
     }
 

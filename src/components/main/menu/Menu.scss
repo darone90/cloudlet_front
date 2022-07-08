@@ -1,5 +1,6 @@
 .Menu-main {
     position: relative;
+    z-index: 100;
 
     &__activate {
         position: absolute;
@@ -15,12 +16,15 @@
 
     ul {
         margin-top: 10px;
+        margin-bottom: 10px;
         display: none;
         position: absolute;
+        padding: 5px;
         top: 40px;
         left: -110%;
         animation: menuSlide 0.3s ease forwards;
         background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+        width: 50%;
 
         &.active {
             display: block;
@@ -31,7 +35,7 @@
             margin-bottom: 2px;
             display: block;
             padding: 2px 5px;
-            width: 100%;
+            width: 80%;
             background-color: whitesmoke;
 
             a {

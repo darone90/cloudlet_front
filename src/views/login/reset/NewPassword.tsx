@@ -2,13 +2,14 @@ import React, { ChangeEvent, useEffect, useState, MouseEvent } from 'react';
 import { connection, getconnection } from '../../../global/login-functions';
 import { Link, useParams } from 'react-router-dom';
 import { ButtonSize } from '../../../types/components.type';
+import { dataValidation } from './dataValidation.function';
 
 import Spinner from '../../../components/common/spinner/Spinner';
 import Button from '../../../components/common/button/Button';
 
 import './NewPassword.scss';
 
-interface Password {
+export interface Password {
     password: string;
     confirm: string;
     code: string
@@ -18,18 +19,18 @@ const NewPassword = () => {
 
     const { code } = useParams();
 
-    const [password, setPassword] = useState<Password>({
+    const initialState = {
         password: '',
         confirm: '',
         code: code as string
-    })
+    }
+
+    const [password, setPassword] = useState<Password>(initialState)
 
     const [loading, setLoading] = useState<boolean>(false);
     const [confirm, setConfirm] = useState<boolean>(false);
     const [info, setInfo] = useState<string>('');
     const [color, setColor] = useState<string>('black');
-
-
 
     useEffect(() => {
         (async () => {
@@ -46,16 +47,8 @@ const NewPassword = () => {
 
     const sendNewPassword = async (e: MouseEvent<HTMLButtonElement>) => {
 
-        if (password.password.length > 30 || password.password.length < 8) {
-            setColor('red');
-            setInfo('Hasło musi mieć więcej niż 7 i mniej niż 30 znaków');
-            return
-        }
-        if (password.password !== password.confirm) {
-            setColor('red');
-            setInfo('Potwierdzenie hasła różni się od hasła');
-            return
-        }
+        if (!dataValidation(setColor, setInfo, password)) return;
+
         setLoading(true);
         const response = await connection(password, 'users/reset', 'PUT');
         setLoading(false);
@@ -66,12 +59,7 @@ const NewPassword = () => {
             setColor('red');
             setInfo(response.info);
         }
-        setPassword({
-            password: '',
-            confirm: '',
-            code: code as string
-        })
-
+        setPassword(initialState)
     }
 
     const addPassword = (event: ChangeEvent<HTMLInputElement>) => {

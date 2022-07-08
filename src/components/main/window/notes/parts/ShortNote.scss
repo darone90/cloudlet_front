@@ -1,0 +1,26 @@
+.Short-note {
+    margin: 5px 3px 15px 3px;
+    border: 1px solid black;
+    box-shadow: 2px 5px 10px black;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    h3 {
+        margin: 5px 3px;
+        width: 100%;
+    }
+
+    small {
+        width: 100%;
+        display: block;
+    }
+
+    &__time {
+        width: 100%;
+        border-top: 1px solid black;
+        box-shadow: 0 5px 15px;
+        margin: 10px 5px;
+        padding: 5px;
+    }
+}

@@ -9,6 +9,8 @@ import Spinner from '../../../common/spinner/Spinner';
 import Button from '../../../common/button/Button';
 import { useDispatch } from 'react-redux';
 
+import './Shownote.scss';
+
 const ShowNote = () => {
 
     const { id } = useParams();
@@ -41,7 +43,7 @@ const ShowNote = () => {
             await getNote();
             setLoading(false);
         })()
-    }, [])
+    })
 
     const goBack = () => {
         navigate(-1)
@@ -53,6 +55,7 @@ const ShowNote = () => {
             dispatch(deleteOne(id as string));
             const response = await listDeleter('notes/delete', id as string);
             setLoading(false);
+            navigate(-1);
             if (response.status === false) {
                 navigate(`/error/${response.info}`)
             }
@@ -67,12 +70,12 @@ const ShowNote = () => {
     return (
         <div className='Show-notes'>
             <h2>{note.title}</h2>
-            <h3>Utworzona: {note.create}</h3>
+            <small>Utworzona: {note.create}</small>
             <p>{note.description}</p>
             {note.startDate ? <strong>Początek wydarzenia: {note.startDate}</strong> : null}
             {note.endDate ? <strong>Zakończenie: {note.endDate}</strong> : null}
-            <p>Autousuwanie po zakończeniu: {note.delete ? 'TAK' : 'NIE'}</p>
-            <p>Przypomnienie Email: {note.email ? `TAK ${note.email}` : 'NIE'}</p>
+            <strong>Autousuwanie po zakończeniu: {note.delete ? 'TAK' : 'NIE'}</strong>
+            <strong>Przypomnienie Email: {note.email ? `TAK ${note.email}` : 'NIE'}</strong>
             <Button text='Powrót' size={ButtonSize.Small} func={goBack} />
             <Button text='Usuń' size={ButtonSize.Small} func={deleteHandler} />
         </div>
