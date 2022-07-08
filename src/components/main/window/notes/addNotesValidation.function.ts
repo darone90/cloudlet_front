@@ -21,6 +21,12 @@ export const addNoteValidation = (color: Dispatch<SetStateAction<string>>, info:
         return false;
     }
 
+    if (noteData.delete === true && noteData.endDate === '') {
+        info('Należy podać datę zakończenia eventu jeśli włączone jest autousuwanie');
+        color('red');
+        return false;
+    }
+
     return true
 }
 
