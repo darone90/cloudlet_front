@@ -39,7 +39,6 @@ export const getFreeSpace = async (): Promise<freeSpace> => {
     }) as any;
 
     const data = await income.json() as freeSpace;
-
     return data
 }
 

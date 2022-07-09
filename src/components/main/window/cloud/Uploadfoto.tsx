@@ -1,10 +1,10 @@
 import React, { useState, ChangeEvent } from 'react';
 import { ButtonSize } from '../../../../types/components.type';
 import { sendFile } from '../../../../global/files-functions';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { formatChange } from '../../../../global/files-functions';
 import { addFoto } from '../../../../features/foto-slice';
+import { getSession } from '../../../../global/login-functions';
 
 import Button from '../../../common/button/Button';
 import Spinner from '../../../common/spinner/Spinner';
@@ -12,9 +12,9 @@ import Spinner from '../../../common/spinner/Spinner';
 import './Uploadfoto.scss';
 
 
+
 const UploadFoto = () => {
 
-    const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const [isFile, setIsFile] = useState<boolean>(false);
@@ -34,6 +34,8 @@ const UploadFoto = () => {
 
         const formData = new FormData();
         formData.append('file', file as File);
+        formData.append('type', 'foto');
+        formData.append('token', getSession().token as string)
 
         setLoading(true);
         const response = await sendFile('files', formData);
@@ -45,9 +47,9 @@ const UploadFoto = () => {
             setInfo('Zdjęcie zostało poprawnie zapisane');
             setFile(null);
             setIsFile(false);
-        } else (
-            navigate(`/error/${response.info}`)
-        )
+        } else {
+            window.location.href = `/error/${response.info}`;
+        }
 
     }
 

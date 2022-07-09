@@ -41,7 +41,7 @@ const User = () => {
             const id = getSession().token;
             const response = await connection({}, `users/change/${id}`, 'DELETE');
             if (response.status === false) {
-                navigate(`/error/:${response.info}`);
+                window.location.href = `/error/:${response.info}`;
             } else {
                 logout()
             }
@@ -66,7 +66,7 @@ const User = () => {
                 logout()
             }, 5000)
         } else {
-            navigate(`/error/:${response.info}`)
+            window.location.href = `/error/:${response.info}`
         }
     }
 

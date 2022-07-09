@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState, MouseEvent } from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { User } from '../../../types/login.types';
 import { newUserValidationFunc } from "./validation.function";
 import { connection } from "../../../global/login-functions";
@@ -18,8 +18,6 @@ const initialState = {
 
 const SignUp = () => {
 
-    const navigate = useNavigate();
-
     const [loading, setLoading] = useState<boolean>(false)
 
     const [information, setInformation] = useState<string>('Proszę uzupełnić dane');
@@ -36,7 +34,7 @@ const SignUp = () => {
         setLoading(false);
 
         if (response.status !== true) {
-            navigate(`/error/:${response.info}`)
+            window.location.href = `/error/:${response.info}`;
         } else {
             setColor('green');
             setInformation('Dane zostały prawidłowo zapisane. W celu aktywacji konta sprawdź swoją skrzynkę i kliknij w link weryfikacyjny');

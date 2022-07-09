@@ -16,7 +16,7 @@ const Gallery = () => {
 
     return (
         <div className='Gallery'>
-            {list}
+            {list.length < 1 ? 'Brak zdjęć w bazie' : list}
         </div>
     )
 }

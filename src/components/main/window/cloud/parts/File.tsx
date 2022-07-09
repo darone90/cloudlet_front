@@ -3,8 +3,8 @@ import { fileEntity } from '../../../../../types/files.type';
 import { ButtonSize } from '../../../../../types/components.type';
 import { deleteFileFromDatabase } from '../../../../../global/files-functions';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { deleteFile } from '../../../../../features/files-slice';
+import fileDownload from 'js-file-download';
 
 import Spinner from '../../../../common/spinner/Spinner';
 import Button from '../../../../common/button/Button';
@@ -17,26 +17,34 @@ interface Props {
 const File = (props: Props) => {
 
     const dispatch = useDispatch();
-    const navigate = useNavigate()
 
     const { id, name, type, size } = props.file
 
     const [loading, setLoading] = useState<boolean>(false)
 
     const deleteHandle = async () => {
-        setLoading(true);
-        const income = await deleteFileFromDatabase(id);
-        setLoading(false);
+        if (window.confirm('Na pewno usunąć?')) {
 
-        if (income.status === true) {
-            dispatch(deleteFile(id))
-        } else {
-            navigate(`/error/${income.info}`)
-        }
+            setLoading(true);
+            const income = await deleteFileFromDatabase(id);
+            setLoading(false);
+
+            if (income.status === true) {
+                dispatch(deleteFile(id))
+            } else {
+                window.location.href = `/error/${income.info}`;
+            }
+        }   
     }
 
     const downloadHandle = async () => {
-
+        try {
+            const res = await fetch(`http://localhost:8080/files/file/${id}`)
+            const blob = await res.blob()
+            fileDownload(blob, name)
+        } catch (err) {
+            window.location.href = `/error/${(err as Error).message}`
+        }  
     }
 
     if (loading) return <Spinner />;

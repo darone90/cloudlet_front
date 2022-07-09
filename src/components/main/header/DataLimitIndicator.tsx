@@ -13,11 +13,11 @@ const Indicator = (props: Props) => {
 
     return (
         <div className='Indicator'>
-            <small>Miejsce na pliki: {100 - first}%</small>
+            <small>Zapełnienie dysku: {first}%</small>
             <div className="Indicator__bar">
                 <div className="Indicator__space" style={{ width: `${first}%` }}></div>
             </div>
-            <small>Miejsce na zdjęcia: {100 - second}%</small>
+            <small>Zapełnienie dysku: {second}%</small>
             <div className="Indicator__bar">
                 <div className="Indicator__space" style={{ width: `${second}%` }}></div>
             </div>

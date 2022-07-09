@@ -4,14 +4,14 @@ import { Note } from '../../../../types/notes.type';
 import { connection } from '../../../../global/login-functions';
 import { addNoteValidation, createShortNote } from './addNotesValidation.function';
 import { addOne } from '../../../../features/notes-slice';
+import { useDispatch } from 'react-redux';
 
 import Button from '../../../common/button/Button';
 import CallendarForm from './parts/CallendarForm';
 import Spinner from '../../../common/spinner/Spinner';
 
 import './Addnotes.scss';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+
 
 const initialState = {
     title: '',
@@ -26,7 +26,6 @@ const initialState = {
 const AddNotes = () => {
 
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     const [addCallendar, setAddCallendar] = useState<boolean>(false);
     const [loading, setLoading] = useState<boolean>(false);
@@ -60,7 +59,7 @@ const AddNotes = () => {
             setNoteData({ ...initialState, create: ((new Date()).toISOString()).slice(0, 10), })
             window.scrollTo({ top: 0, behavior: 'smooth' })
         } else {
-            navigate(`/error/:${response.info}`)
+            window.location.href = `/error/:${response.info}`;
         }
     }
     if (loading) return <Spinner />;

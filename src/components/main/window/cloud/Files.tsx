@@ -12,9 +12,10 @@ const Files = () => {
 
     const list = files.map((file, index) => <File file={file} key={index} />);
 
+
     return (
         <div className='Files'>
-            {list}
+            {list.length < 1 ? 'Brak plików w bazie' : list}
         </div>
     )
 }

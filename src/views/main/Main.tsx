@@ -13,12 +13,10 @@ import Footer from '../../components/main/footer/Footer';
 import Spinner from '../../components/common/spinner/Spinner';
 
 import './Main.scss'
-import { useNavigate } from 'react-router-dom';
 
 const Main = () => {
 
     const dispatch = useDispatch();
-    const navigate = useNavigate();
 
     const [loading, setLoading] = useState<boolean>(true)
 
@@ -27,7 +25,7 @@ const Main = () => {
             const data = await listConnection('notes');
             if (data) { dispatch(loadAll(data)) }
         } catch (err) {
-            navigate(`/error/nie udało się załadować listy notatek...`)
+            window.location.href = `/error/nie udało się załadować listy notatek...`;
         }
     }
 
@@ -40,7 +38,7 @@ const Main = () => {
                 dispatch(loadFoto(fotos))
             }
         } catch (err) {
-            navigate(`/error/nie udało się załadować listy plików`)
+            window.location.href = `/error/nie udało się załadować listy plików`;
         }
     }
 
@@ -50,7 +48,7 @@ const Main = () => {
             await loadFilesFromDatabase();
             setLoading(false)
         })();
-    });
+    }, []);
 
     if (loading) return <Spinner />;
 

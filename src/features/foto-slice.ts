@@ -33,11 +33,11 @@ export const fotoSlice = createSlice({
             state.fotos = [...state.fotos, action.payload];
         },
 
-        deletFoto: (state, action: DeleteFile) => {
+        deleteFoto: (state, action: DeleteFile) => {
             const newState = state.fotos.filter(foto => foto.id !== action.payload);
             state.fotos = [...newState];
         }
     }
 })
 
-export const { loadFoto, addFoto, deletFoto } = fotoSlice.actions;
+export const { loadFoto, addFoto, deleteFoto } = fotoSlice.actions;

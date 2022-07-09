@@ -34,7 +34,7 @@ const ShowNote = () => {
             const data = await getOneNote('notes/get', id as string);
             if (data) setNote(data);
         } catch (err) {
-            navigate(`/error/błąd podczas pobierania notatki.`)
+            window.location.href = `/error/błąd podczas pobierania notatki.`
         }
     }
 
@@ -57,10 +57,10 @@ const ShowNote = () => {
             setLoading(false);
             navigate(-1);
             if (response.status === false) {
-                navigate(`/error/${response.info}`)
+                window.location.href = `/error/${response.info}`
             }
         } catch (err) {
-            navigate(`/error/błąd podczas usuwania... ponów prubę za chwilę`)
+            window.location.href = `/error/błąd podczas usuwania... ponów prubę za chwilę`;
         }
     };
 

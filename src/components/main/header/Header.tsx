@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { getSession } from '../../../global/login-functions';
 import { getFreeSpace } from '../../../global/files-functions';
-import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../../store';
+
 
 import Indicator from './DataLimitIndicator';
 
@@ -12,7 +14,8 @@ import logo from './cloud.png'
 
 const Header = () => {
 
-    const navigate = useNavigate();
+    const { files } = useSelector((store: RootState) => store.files);
+    const { fotos } = useSelector((store: RootState) => store.fotos);
 
     const [userName, setUserName] = useState<string>('');
     const [fileFreeSpace, setFileFreeSpace] = useState<number>(0);
@@ -26,7 +29,7 @@ const Header = () => {
             setFileFreeSpace(data.fileSpace);
             setFotoFreeSpace(data.fotoSpace);
         } catch (err) {
-            navigate('/error/błąd wczytywania ilości wolnego miejsca na dysku')
+            window.location.href = '/error/błąd wczytywania ilości wolnego miejsca na dysku';
         }
     }
 
@@ -34,7 +37,7 @@ const Header = () => {
         (async () => {
             await freeSpace();
         })();
-    });
+    }, [files, fotos]);
 
     return (
         <div className='Header'>
@@ -44,7 +47,7 @@ const Header = () => {
                 <img src={logo} alt="Cloud" />
             </div>
             <small className='Header__small'>Witaj {userName}</small>
-            <Indicator first={fileFreeSpace} second={fotoFreeSpace} />
+            <Indicator first={fileFreeSpace > 100 ? 100 : fileFreeSpace} second={fotoFreeSpace > 100 ? 100 : fotoFreeSpace} />
         </div>
     );
 };
