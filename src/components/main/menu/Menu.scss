@@ -1,11 +1,15 @@
 .Menu-main {
     position: relative;
     z-index: 100;
+    
 
     &__activate {
         position: absolute;
         top: 0;
         left: 2%;
+        @media(min-width: 770px) {
+                display: none;
+            }
     }
 
     &__logout {
@@ -25,9 +29,21 @@
         animation: menuSlide 0.3s ease forwards;
         background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
         width: 50%;
+        @media(min-width: 770px) {
+                display: flex;
+                margin-left: 2%;
+                top: -10px;
+                width: 70%;
+                background: none;
+                flex-direction: row;
+        
+            }
 
         &.active {
             display: block;
+            @media(min-width: 770px) {
+                    display: flex;
+                }
         }
 
         li {

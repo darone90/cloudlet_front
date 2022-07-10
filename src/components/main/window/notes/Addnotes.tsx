@@ -66,7 +66,6 @@ const AddNotes = () => {
 
     return (
         <div className='Add-notes'>
-            <p style={{ color }}>{info}</p>
             <form>
                 <label>
                     Tytuł <input type="text" name='title' value={noteData.title} onChange={addnoteData} maxLength={50} />
@@ -81,6 +80,7 @@ const AddNotes = () => {
                 {addCallendar ? <CallendarForm func={addnoteData} data={noteData} set={setNoteData} /> : null}
                 <Button text='Zapisz notatkę' size={ButtonSize.Small} func={addNoteToDatabase} />
             </form>
+            <p style={{ color }}>{info}</p>
         </div>
     )
 }

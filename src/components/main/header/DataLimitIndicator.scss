@@ -1,4 +1,9 @@
 .Indicator {
+    @media(min-width: 650px) {
+            width: 30%;
+            height: 30%;
+            bottom: 2%;
+        }
     width: 50%;
     height: 70px;
     display: flex;

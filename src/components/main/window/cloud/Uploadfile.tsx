@@ -58,13 +58,13 @@ const UploadFiles = () => {
 
     return (
         <div className='Upload-file'>
-            <p>Dodaj plik do swoje chmurki. Akceptowane formaty: PDF DOC DOCX XLS XLSX</p>
+            <p>Dodaj plik do swoje chmurki</p>
+            <p>Akceptowane formaty: PDF DOC DOCX XLS XLSX</p>
             <input type="file" name='file' multiple={false} onChange={fileHandler} accept=".pdf,.doc,.docx,.xls,.xlsx" />
             {isFile ?
                 <div className="Upload-file__info">
                     <small>Nazwa: {file?.name}</small>
-                    <small>Typ: {file?.type}</small>
-                    <small>Rozmiar: {file?.size}</small>
+                    <small>Rozmiar: {Number(file?.size) / 1000000} Mb</small>
                     <Button text='Wyślij plik' size={ButtonSize.Small} func={fileSender} />
                 </div>
                 : <strong>{info}</strong>

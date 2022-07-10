@@ -4,6 +4,20 @@
     box-shadow: 3px 3px 8px black;
     display: flex;
     flex-direction: column;
+    @media(min-width: 770px) {
+            width: 70%;
+            margin: 5px auto;
+        }
+    
+        @media(min-width: 1024px) {
+            width: 50%;
+    
+        }
+    
+        @media(min-width: 1200px) {
+            width: 30%;
+    
+        }
 
     h2 {
         text-align: center;

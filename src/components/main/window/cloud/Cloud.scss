@@ -1,9 +1,17 @@
 .Cloud {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-direction: column;
+        flex-wrap: wrap;
+    
+        @media(min-width: 770px) {
+        flex-direction: row;
+        justify-content: space-around;
+        }
 
     .main {
         width: 50%;
+        @media(min-width: 770px) {
+                margin: 0 200px 0 0;
+            }
     }
 }

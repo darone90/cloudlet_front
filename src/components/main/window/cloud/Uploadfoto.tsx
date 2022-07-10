@@ -57,13 +57,13 @@ const UploadFoto = () => {
 
     return (
         <div className='Upload-foto'>
-            <p>Dodaj zdjęcia do swojej galerii. Akceptowane formaty: JPG PNG</p>
+            <p>Dodaj zdjęcia do swojej galerii</p>
+            <p>Akceptowane formaty: JPG PNG</p>
             <input type="file" name='file' multiple={false} onChange={fileHandler} accept=".jpg,.png" />
             {isFile ?
                 <div className="Upload-foto__info">
                     <small>Nazwa: {file?.name}</small>
-                    <small>Typ: {file?.type}</small>
-                    <small>Rozmiar: {file?.size}</small>
+                    <small>Rozmiar: {Number(file?.size) / 1000000} Mb</small>
                     <Button text='Wyślij plik' size={ButtonSize.Small} func={fileSender} />
                 </div>
                 : <strong>{info}</strong>

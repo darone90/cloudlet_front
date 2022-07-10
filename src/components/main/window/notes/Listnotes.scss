@@ -4,4 +4,9 @@
     border: 1px solid black;
     padding: 3px;
     box-shadow: 0 5px 10px black;
+    @media(min-width: 770px) {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
 }

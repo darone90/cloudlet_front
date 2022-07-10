@@ -25,17 +25,19 @@ const ShortNote = (props: Props) => {
     const [loading, setLoading] = useState<boolean>(false);
 
     const deleteNote = async () => {
-        try {
-            setLoading(true);
-            dispatch(deleteOne(id));
-            const response = await listDeleter('notes/delete', id);
-            setLoading(false);
-            if (response.status === false) {
-                navigate(`/error/${response.info}`)
+        if (window.confirm('Na pewno usunąć ?')) {
+            try {
+                setLoading(true);
+                dispatch(deleteOne(id));
+                const response = await listDeleter('notes/delete', id);
+                setLoading(false);
+                if (response.status === false) {
+                    navigate(`/error/${response.info}`)
+                }
+            } catch (err) {
+                navigate(`/error/błąd podczas usuwania... ponów prubę za chwilę`)
             }
-        } catch (err) {
-            navigate(`/error/błąd podczas usuwania... ponów prubę za chwilę`)
-        }
+        }   
     }
 
     const show = () => {
@@ -47,7 +49,7 @@ const ShortNote = (props: Props) => {
     return (
         <div className='Short-note'>
             <h3>{title}</h3>
-            <small>Utworzona{createdAt}</small>
+            <small>Utworzona: {createdAt}</small>
             <Button text='Usuń' size={ButtonSize.Small} func={deleteNote} />
             <Button text='Zobacz' size={ButtonSize.Small} func={show} />
             <div className="Short-note__time" style={{ display: eventStart ? 'block' : 'none' }}>

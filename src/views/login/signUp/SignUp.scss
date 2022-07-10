@@ -1,17 +1,48 @@
 .signup {
+
     margin: 0%;
     padding: 0;
     width: 100%;
     height: auto;
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+        height: 100vh;
 
     h1 {
-        font-family: Arial, Helvetica, sans-serif;
+        font-family: 'Raleway', Arial, Helvetica, sans-serif;
             text-align: center;
             border-bottom: 1px solid black;
             padding: 10px;
+            margin-bottom: 30px;
     }
 
     &__form {
+        @media(min-width: 480px) {
+        
+                width: 70%;
+                margin: 0 auto;
+            }
+        
+            @media(min-width: 580px) {
+        
+                width: 60%;
+                margin: 0 auto;
+            }
+        
+            @media(min-width: 770px) {
+        
+                width: 50%;
+                border: 1px solid wheat;
+                box-shadow: 3px 3px 5px white;
+                margin-bottom: 25px;
+            }
+        
+            @media(min-width: 1024px) {
+        
+                width: 30%;
+        
+            }
         display: flex;
         flex-direction: column;
         align-items: flex-start;
@@ -30,7 +61,7 @@
         }
 
         button.main {
-            margin: 10px auto;
+            margin: 20px auto;
         }
     }
 
@@ -38,9 +69,21 @@
         margin: 10px auto;
         text-align: center;
         font-size: 20px;
+        @media(min-width: 770px) {
+        
+                width: 50%;
+                border: 1px solid wheat;
+                box-shadow: 3px 3px 5px white;
+                padding: 15px;
+            }
     }
 
     &__return {
+        @media(min-width: 580px) {
+        
+                width: 30%;
+        
+            }
         margin: 10px 50%;
         transform: translateX(-50%);
         width: 40%;
@@ -53,6 +96,23 @@
         a {
             text-decoration: none;
             color: black;
+            display: block;
+                width: 100%;
+                height: 100;
         }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                @keyframes gradient {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    0% {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        background-position: 0% 50%;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    50% {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        background-position: 100% 50%;
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    100% {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        background-position: 0% 50%;
     }
 }

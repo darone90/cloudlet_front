@@ -1,11 +1,16 @@
 import { Income } from "../types/connection.type";
 import { backendConf } from "../connection.config";
 import { fileEntity, downloadFileList, freeSpace } from "../types/files.type";
+import { getSession } from "./login-functions";
 
 
 export const sendFile = async (path: string, file: FormData): Promise<Income> => {
-    const income = await fetch(`http://localhost:${backendConf.port}/${path}`, {
+    const income = await fetch(`${backendConf.address}/${path}`, {
         method: "POST",
+        headers: {
+            'Token': String(getSession().token),
+            'Name': encodeURIComponent(String(getSession().user))
+        },
         body: file,
     }) as any;
 
@@ -24,8 +29,12 @@ export const formatChange = (file: File, id: string): fileEntity => {
 }
 
 export const getFilesList = async (path: string): Promise<downloadFileList> => {
-    const income = await fetch(`http://localhost:${backendConf.port}/${path}`, {
+    const income = await fetch(`${backendConf.address}/${path}`, {
         method: "GET",
+        headers: {
+            'Token': String(getSession().token),
+            'Name': encodeURIComponent(String(getSession().user))
+        },
     }) as any;
 
     const data = await income.json() as downloadFileList;
@@ -34,8 +43,12 @@ export const getFilesList = async (path: string): Promise<downloadFileList> => {
 }
 
 export const getFreeSpace = async (): Promise<freeSpace> => {
-    const income = await fetch(`http://localhost:${backendConf.port}/files/free`, {
+    const income = await fetch(`${backendConf.address}/files/free`, {
         method: "GET",
+        headers: {
+            'Token': String(getSession().token),
+            'Name': encodeURIComponent(String(getSession().user))
+        },
     }) as any;
 
     const data = await income.json() as freeSpace;
@@ -43,8 +56,12 @@ export const getFreeSpace = async (): Promise<freeSpace> => {
 }
 
 export const deleteFileFromDatabase = async (id: string): Promise<Income> => {
-    const income = await fetch(`http://localhost:${backendConf.port}/files/delete/${id}`, {
+    const income = await fetch(`${backendConf.address}/files/delete/${id}`, {
         method: "DELETE",
+        headers: {
+            'Token': String(getSession().token),
+            'Name': encodeURIComponent(String(getSession().user))
+        },
     }) as any;
 
     const data = await income.json() as Income;

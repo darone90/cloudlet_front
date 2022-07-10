@@ -15,6 +15,7 @@ const Files = () => {
 
     return (
         <div className='Files'>
+            <h2>Twoje pliki w chmurce: </h2>
             {list.length < 1 ? 'Brak plików w bazie' : list}
         </div>
     )

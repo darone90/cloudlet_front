@@ -16,6 +16,7 @@ const Gallery = () => {
 
     return (
         <div className='Gallery'>
+            <h2>Twoje zdjęcia w chmurce: </h2>
             {list.length < 1 ? 'Brak zdjęć w bazie' : list}
         </div>
     )

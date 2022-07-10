@@ -5,10 +5,15 @@ import { deleteFileFromDatabase } from '../../../../../global/files-functions';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { deleteFoto } from '../../../../../features/foto-slice';
+import { backendConf } from '../../../../../connection.config';
+import { getSession } from '../../../../../global/login-functions';
+
 import fileDownload from 'js-file-download';
 
 import Spinner from '../../../../common/spinner/Spinner';
 import Button from '../../../../common/button/Button';
+
+import './Foto.scss';
 
 
 interface Props {
@@ -20,7 +25,7 @@ const Foto = (props: Props) => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
 
-    const { id, name, type, size } = props.file
+    const { id, name, size } = props.file
 
     const [loading, setLoading] = useState<boolean>(false)
 
@@ -41,7 +46,13 @@ const Foto = (props: Props) => {
 
     const downloadHandle = async () => {
         try {
-            const res = await fetch(`http://localhost:8080/files/file/${id}`)
+            const res = await fetch(`${backendConf.address}/files/file/${id}`, {
+                method: 'GET',
+                headers: {
+                    'Token': String(getSession().token),
+                    'Name': encodeURIComponent(String(getSession().user))
+                },
+            })
             const blob = await res.blob()
             fileDownload(blob, name)
         } catch (err) {
@@ -58,8 +69,7 @@ const Foto = (props: Props) => {
     return (
         <div className='Foto'>
             <h3>{name}</h3>
-            <small>typ: {type}</small>
-            <small>rozmiar: {size}</small>
+            <small>rozmiar: {Number(size) / 1000000} Mb</small>
             <Button text='Pobierz' size={ButtonSize.Small} func={downloadHandle} />
             <Button text='Usuń' size={ButtonSize.Small} func={deleteHandle} />
             <Button text='Podgląd' size={ButtonSize.Small} func={showPopupHandle} />

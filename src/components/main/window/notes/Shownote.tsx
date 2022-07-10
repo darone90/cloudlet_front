@@ -70,7 +70,7 @@ const ShowNote = () => {
     return (
         <div className='Show-notes'>
             <h2>{note.title}</h2>
-            <small>Utworzona: {note.create}</small>
+            <small>Utworzona :{note.create}</small>
             <p>{note.description}</p>
             {note.startDate ? <strong>Początek wydarzenia: {note.startDate}</strong> : null}
             {note.endDate ? <strong>Zakończenie: {note.endDate}</strong> : null}
