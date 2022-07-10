@@ -1,6 +1,6 @@
 {
   "name": "cloudlet_front",
-  "version": "0.1.0",
+  "version": "1.0.1",
   "private": true,
   "dependencies": {
     "@fullcalendar/daygrid": "^5.11.0",
