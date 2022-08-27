@@ -1,46 +1,78 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Welcome in Cloudlet App
 
-## Available Scripts
+## Your easy access and fast private space in internet
 
-In the project directory, you can run:
+This application let you to store documents and photos by the easiest and fastest way. Also you can write quick notes, match you task on calendar and adjust email reminders.
 
-### `npm start`
+## Application map
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+```mermaid
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+graph LR
 
-### `npm test`
+A[Welcome page] --> B[Log in] --> E[Documents] --> F[files]
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+E --> G[photos]
 
-### `npm run build`
+B --> H[Notes]
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+B --> I[Calendar]
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+B --> J[User] --> K[Password change]
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+J --> L[email change]
 
-### `npm run eject`
+A --> C[create account] --> M[Email activation link] --> N[Account activation]
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+A --> D[forget password?] --> O[Password reset link] --> P[Password reset]
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
+## Languange 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Service is in Polish, there are plans for English version
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## About App
 
-## Learn More
+Application was made with React and TypeScript. Global store is handled by redux with redux toolkit.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Additional packages:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- full calendar
+
+- js-file-download
+
+- Sass preprocessor
+
+- react-router
+
+Minimum screen width is 320px. To this value app is fully responsive
+
+## How to start ?
+
+After cloning this repository use node package manager to install all required node modules
+
+- npm install
+
+Before you start make sure that you have correct backend address value in connection.config.ts
+
+To start developer server:
+
+- npm start
+
+To build static production  version:
+
+- npm run build
+
+## Back-end
+
+Backend for this app you can find in my repository: https://github.com/darone90/cloudlet_back
+
+## Contact
+
+If you want to reach me use my email address: pileckidariusz90@gmail.com
+
+## Copyrights
+
+All code in this repository is free to use for everyone
+

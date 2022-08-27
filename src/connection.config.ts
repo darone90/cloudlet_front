@@ -3,5 +3,5 @@ interface B_conf {
 }
 
 export const backendConf: B_conf = {
-    address: `/api`,
+    address: `http://localhost:8080`,
 }
